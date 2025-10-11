@@ -40,6 +40,9 @@ lerna-debug.log*
 .eslintcache
 .prettiercache
 
+# LLM
+claude.md
+
 # Coverage
 coverage/
 .nyc_output/
