@@ -47,6 +47,11 @@ claude.md
 coverage/
 .nyc_output/
 
+# Testing
+test-results/
+playwright-report/
+playwright/.cache/
+
 # OS / Editor
 .DS_Store
 .AppleDouble

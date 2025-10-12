@@ -30,7 +30,7 @@ export function LoginForm() {
     },
   })
 
-  async function onSubmit(data: LoginFormData) {
+  async function handleSubmit(data: LoginFormData) {
     setIsLoading(true)
     setError(null)
 
@@ -53,7 +53,7 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="email"
