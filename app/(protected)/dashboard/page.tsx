@@ -100,17 +100,17 @@ export default async function DashboardPage() {
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            You're successfully authenticated and can access protected routes. This dashboard
+            You&apos;re successfully authenticated and can access protected routes. This dashboard
             demonstrates how to create protected pages that require authentication.
           </p>
           <div className="mt-4 rounded-lg bg-muted p-4">
             <h3 className="mb-2 font-semibold">Next Steps:</h3>
             <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
-              <li>Customize this dashboard with your application's features</li>
+              <li>Customize this dashboard with your application&apos;s features</li>
               <li>Add more protected routes in the (protected) folder</li>
               <li>Implement user profile management</li>
               <li>Connect to your Supabase database tables</li>
-              <li>Build out your application's core functionality</li>
+              <li>Build out your application&apos;s core functionality</li>
             </ul>
           </div>
         </CardContent>
