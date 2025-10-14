@@ -1,12 +1,20 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { UserNav } from '@/components/auth/user-nav'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   if (!user) {
     return null
@@ -31,15 +39,21 @@ export default async function DashboardPage() {
           <CardContent>
             <dl className="space-y-2">
               <div>
-                <dt className="text-sm font-medium text-muted-foreground">Email</dt>
+                <dt className="text-sm font-medium text-muted-foreground">
+                  Email
+                </dt>
                 <dd className="text-sm">{user.email}</dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-muted-foreground">User ID</dt>
-                <dd className="text-xs font-mono">{user.id}</dd>
+                <dt className="text-sm font-medium text-muted-foreground">
+                  User ID
+                </dt>
+                <dd className="font-mono text-xs">{user.id}</dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-muted-foreground">Created</dt>
+                <dt className="text-sm font-medium text-muted-foreground">
+                  Created
+                </dt>
                 <dd className="text-sm">
                   {new Date(user.created_at).toLocaleDateString()}
                 </dd>
@@ -72,17 +86,29 @@ export default async function DashboardPage() {
             <CardDescription>Helpful links and documentation</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <Link href="https://supabase.com/docs" target="_blank" rel="noopener noreferrer">
+            <Link
+              href="https://supabase.com/docs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button className="w-full" variant="outline">
                 Supabase Docs
               </Button>
             </Link>
-            <Link href="https://nextjs.org/docs" target="_blank" rel="noopener noreferrer">
+            <Link
+              href="https://nextjs.org/docs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button className="w-full" variant="outline">
                 Next.js Docs
               </Button>
             </Link>
-            <Link href="https://ui.shadcn.com" target="_blank" rel="noopener noreferrer">
+            <Link
+              href="https://ui.shadcn.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button className="w-full" variant="outline">
                 shadcn/ui Docs
               </Button>
@@ -100,13 +126,16 @@ export default async function DashboardPage() {
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            You&apos;re successfully authenticated and can access protected routes. This dashboard
-            demonstrates how to create protected pages that require authentication.
+            You&apos;re successfully authenticated and can access protected
+            routes. This dashboard demonstrates how to create protected pages
+            that require authentication.
           </p>
           <div className="mt-4 rounded-lg bg-muted p-4">
             <h3 className="mb-2 font-semibold">Next Steps:</h3>
             <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
-              <li>Customize this dashboard with your application&apos;s features</li>
+              <li>
+                Customize this dashboard with your application&apos;s features
+              </li>
               <li>Add more protected routes in the (protected) folder</li>
               <li>Implement user profile management</li>
               <li>Connect to your Supabase database tables</li>

@@ -68,11 +68,7 @@ export function RegisterForm() {
             <FormItem>
               <FormLabel>Full Name (Optional)</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="John Doe"
-                  {...field}
-                  disabled={isLoading}
-                />
+                <Input placeholder="John Doe" {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -132,11 +128,7 @@ export function RegisterForm() {
             </FormItem>
           )}
         />
-        {error && (
-          <div className="text-sm text-destructive">
-            {error}
-          </div>
-        )}
+        {error && <div className="text-sm text-destructive">{error}</div>}
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? 'Creating account...' : 'Create Account'}
         </Button>

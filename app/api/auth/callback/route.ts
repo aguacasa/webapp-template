@@ -22,5 +22,7 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/login?message=Could not authenticate user`)
+  return NextResponse.redirect(
+    `${origin}/login?message=Could not authenticate user`
+  )
 }

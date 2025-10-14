@@ -1,12 +1,20 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { UserNav } from '@/components/auth/user-nav'
 
 export default async function HomePage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -72,9 +80,7 @@ export default async function HomePage() {
         <Card>
           <CardHeader>
             <CardTitle>📝 Form Handling</CardTitle>
-            <CardDescription>
-              React Hook Form + Zod validation
-            </CardDescription>
+            <CardDescription>React Hook Form + Zod validation</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
@@ -86,9 +92,7 @@ export default async function HomePage() {
         <Card>
           <CardHeader>
             <CardTitle>✨ TypeScript</CardTitle>
-            <CardDescription>
-              End-to-end type safety
-            </CardDescription>
+            <CardDescription>End-to-end type safety</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
@@ -100,9 +104,7 @@ export default async function HomePage() {
         <Card>
           <CardHeader>
             <CardTitle>🛠️ Developer Experience</CardTitle>
-            <CardDescription>
-              ESLint, Prettier, and more
-            </CardDescription>
+            <CardDescription>ESLint, Prettier, and more</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
@@ -115,9 +117,9 @@ export default async function HomePage() {
       <section className="mt-12 text-center">
         <h2 className="mb-4 text-2xl font-semibold">Ready to Build?</h2>
         <p className="mb-6 text-muted-foreground">
-          {user 
+          {user
             ? "You're signed in! Check out the dashboard to see protected content."
-            : "Sign up or sign in to access the full application features."}
+            : 'Sign up or sign in to access the full application features.'}
         </p>
         {user ? (
           <Link href="/dashboard">

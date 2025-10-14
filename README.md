@@ -43,6 +43,7 @@ cp .env.local.example .env.local
 ```
 
 Edit `.env.local` with your Supabase credentials:
+
 - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous key
 
@@ -57,24 +58,28 @@ Open [http://localhost:3000](http://localhost:3000) to see your application.
 ## Features
 
 ### Authentication
+
 - Email/password authentication with Supabase
 - Protected routes and middleware
 - Login and registration forms with validation
 - User session management
 
 ### UI Components
+
 - Pre-configured shadcn/ui components
 - Responsive design with Tailwind CSS
 - Dark mode support
 - Accessible and customizable components
 
 ### Form Handling
+
 - Type-safe forms with React Hook Form
 - Zod schema validation
 - Error handling and user feedback
 - Sample login and registration forms
 
 ### Code Quality
+
 - TypeScript for type safety
 - ESLint for code linting
 - Prettier for code formatting
@@ -184,6 +189,7 @@ CREATE TRIGGER on_auth_user_created
 ### Environment Variables
 
 For production, ensure you set:
+
 - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous key
 
@@ -206,6 +212,7 @@ npx shadcn@latest add [component-name]
 ### Forms
 
 Create new form schemas in `lib/validations/`:
+
 - Define Zod schemas for validation
 - Export TypeScript types
 - Use in components with React Hook Form
@@ -225,6 +232,7 @@ MIT
 ## Support
 
 For issues and questions, please refer to the documentation of the individual technologies used in this template:
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Supabase Documentation](https://supabase.com/docs)
 - [shadcn/ui Documentation](https://ui.shadcn.com)

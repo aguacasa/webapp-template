@@ -10,9 +10,7 @@ export function UserNav({ user }: UserNavProps) {
 
   return (
     <div className="flex items-center gap-4">
-      <p className="text-sm text-muted-foreground">
-        {user.email}
-      </p>
+      <p className="text-sm text-muted-foreground">{user.email}</p>
       <SignOutButton />
     </div>
   )

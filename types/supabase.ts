@@ -38,7 +38,7 @@ export interface Database {
             isOneToOne: true
             referencedRelation: 'users'
             referencedColumns: ['id']
-          }
+          },
         ]
       }
     }

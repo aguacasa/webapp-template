@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Next.js Starter Template',
-  description: 'A modern web application built with Next.js, TypeScript, and Supabase',
+  description:
+    'A modern web application built with Next.js, TypeScript, and Supabase',
 }
 
 export default function RootLayout({
@@ -17,9 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen bg-background">
-          {children}
-        </div>
+        <div className="min-h-screen bg-background">{children}</div>
       </body>
     </html>
   )
