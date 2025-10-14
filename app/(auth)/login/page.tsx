@@ -14,7 +14,7 @@ import {
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: { message?: string }
+  searchParams: Promise<{ message?: string }>
 }) {
   const supabase = await createClient()
   const {
@@ -25,6 +25,8 @@ export default async function LoginPage({
     redirect('/dashboard')
   }
 
+  const params = await searchParams
+
   return (
     <Card>
       <CardHeader>
@@ -34,9 +36,9 @@ export default async function LoginPage({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {searchParams?.message && (
+        {params?.message && (
           <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-800">
-            {searchParams.message}
+            {params.message}
           </div>
         )}
         <LoginForm />
