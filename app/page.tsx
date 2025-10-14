@@ -172,9 +172,7 @@ export default async function HomePage() {
             <Card>
               <CardHeader>
                 <CardTitle>🎨 Beautiful Design</CardTitle>
-                <CardDescription>
-                  Stunning UI that users love
-                </CardDescription>
+                <CardDescription>Stunning UI that users love</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
@@ -187,9 +185,7 @@ export default async function HomePage() {
             <Card>
               <CardHeader>
                 <CardTitle>🔄 Real-time Sync</CardTitle>
-                <CardDescription>
-                  Always up-to-date, everywhere
-                </CardDescription>
+                <CardDescription>Always up-to-date, everywhere</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
@@ -261,8 +257,8 @@ export default async function HomePage() {
               <CardContent>
                 <p className="text-sm text-muted-foreground">
                   &quot;The best investment we&apos;ve made this year. Our team
-                  productivity has increased by 40% since we started
-                  using it.&quot;
+                  productivity has increased by 40% since we started using
+                  it.&quot;
                 </p>
               </CardContent>
             </Card>
@@ -478,24 +474,20 @@ export default async function HomePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">
-                  Is my data secure?
-                </CardTitle>
+                <CardTitle className="text-lg">Is my data secure?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
                   Yes! We use bank-level encryption to protect your data. All
-                  data is encrypted at rest and in transit. We&apos;re also
-                  SOC 2 Type II certified.
+                  data is encrypted at rest and in transit. We&apos;re also SOC
+                  2 Type II certified.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">
-                  Do you offer refunds?
-                </CardTitle>
+                <CardTitle className="text-lg">Do you offer refunds?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
@@ -508,9 +500,7 @@ export default async function HomePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">
-                  How do I get support?
-                </CardTitle>
+                <CardTitle className="text-lg">How do I get support?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
