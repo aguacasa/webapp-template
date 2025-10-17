@@ -7,6 +7,8 @@ export interface PricingPlan {
   buttonText: string
   buttonVariant?: 'default' | 'outline'
   popular?: boolean
+  stripePriceId?: string // Stripe Price ID for this plan (optional for free/custom plans)
+  trialDays?: number // Number of trial days for paid plans (e.g., 7 or 14)
 }
 
 export const pricingPlans: PricingPlan[] = [
@@ -23,6 +25,7 @@ export const pricingPlans: PricingPlan[] = [
     ],
     buttonText: 'Get Started',
     buttonVariant: 'outline',
+    // No stripePriceId for free tier
   },
   {
     name: 'Pro',
@@ -36,8 +39,10 @@ export const pricingPlans: PricingPlan[] = [
       '50GB storage',
       'Custom integrations',
     ],
-    buttonText: 'Get Started',
+    buttonText: 'Start Free Trial',
     popular: true,
+    stripePriceId: 'price_pro', // Replace with actual Stripe Price ID
+    trialDays: 14, // 14-day free trial for Pro plan
   },
   {
     name: 'Enterprise',
@@ -52,5 +57,6 @@ export const pricingPlans: PricingPlan[] = [
     ],
     buttonText: 'Contact Sales',
     buttonVariant: 'outline',
+    // No stripePriceId for custom/contact sales plans
   },
 ]

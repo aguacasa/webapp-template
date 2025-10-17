@@ -1,12 +1,13 @@
 # Next.js Web Application Template
 
-A modern, production-ready starter template for building web applications with Next.js 15, TypeScript, Supabase, and shadcn/ui.
+A modern, production-ready starter template for building web applications with Next.js 15, TypeScript, Supabase, Stripe, and shadcn/ui.
 
 ## Tech Stack
 
 - **Framework:** Next.js 15 (App Router)
 - **Language:** TypeScript
 - **Database & Auth:** Supabase
+- **Payments:** Stripe (built-in integration)
 - **UI Components:** shadcn/ui
 - **Styling:** Tailwind CSS
 - **Form Handling:** React Hook Form + Zod
@@ -85,6 +86,18 @@ Open [http://localhost:3000](http://localhost:3000) to see your application.
 - Prettier for code formatting
 - Pre-configured rules and settings
 
+### Payments & Subscriptions
+
+- **Stripe integration built-in** with Hosted Checkout
+- Customer Portal for self-service subscription management
+- Webhook handler for real-time subscription sync
+- Support for free tier, paid plans, and trial periods
+- Flexible pricing structure (any number of tiers)
+- Feature gating based on subscription status
+- Subscription status tracking in Supabase
+
+**💳 For Stripe setup instructions, see [Getting Started: Stripe Integration](reference/stripe-getting-started.md)**
+
 ### SEO Optimization
 
 - Comprehensive metadata system with Open Graph and Twitter Cards
@@ -107,7 +120,11 @@ webapp-template/
 │   │   └── register/
 │   ├── (protected)/        # Protected routes
 │   │   └── dashboard/
+│   ├── actions/            # Server actions
+│   │   └── stripe.ts      # Stripe checkout & portal
 │   ├── api/                # API routes
+│   │   └── webhooks/      # Webhook handlers
+│   │       └── stripe/    # Stripe webhook endpoint
 │   ├── layout.tsx          # Root layout
 │   ├── page.tsx            # Home page
 │   ├── sitemap.ts          # Dynamic XML sitemap
@@ -116,20 +133,31 @@ webapp-template/
 ├── components/             # React components
 │   ├── ui/                 # shadcn/ui components
 │   ├── auth/               # Authentication components
+│   ├── billing/            # Stripe/subscription components
 │   ├── forms/              # Form components
 │   └── landing/            # Landing page sections
 ├── lib/                    # Utility functions
 │   ├── supabase/          # Supabase client setup
+│   ├── stripe/            # Stripe configuration
+│   │   ├── config.ts     # Server-side Stripe client
+│   │   └── client.ts     # Client-side Stripe.js
+│   ├── subscription/      # Subscription utilities
+│   │   ├── status.ts     # Feature gating & status helpers
+│   │   └── queries.ts    # Database operations
 │   ├── seo/               # SEO utilities
 │   │   ├── metadata.ts   # Metadata generator
 │   │   └── schema.tsx    # Structured data helpers
+│   ├── data/              # Static data & configs
+│   │   └── pricing.ts    # Pricing plans configuration
 │   ├── validations/       # Zod schemas
 │   └── utils.ts           # Helper functions
 ├── reference/              # Reference documentation
-│   └── GETTING-STARTED-SEO.md  # SEO configuration guide
-├── docs/                   # Additional documentation
-│   └── SEO-SETUP.md       # Comprehensive SEO guide
+│   ├── stripe-getting-started.md  # Stripe setup guide
+│   └── GETTING-STARTED-SEO.md     # SEO configuration guide
+├── supabase/              # Supabase migrations
+│   └── migrations/        # SQL migration files
 ├── types/                  # TypeScript types
+│   └── subscription.ts    # Subscription type definitions
 └── middleware.ts          # Next.js middleware
 ```
 
@@ -148,6 +176,15 @@ npm run type-check   # Run TypeScript compiler check
 ## Supabase Setup
 
 ### Database Schema
+
+The template includes migrations for the following tables:
+
+1. **Profiles Table** - User profile information
+2. **Subscriptions Table** - Stripe subscription tracking (included in `supabase/migrations/`)
+
+To apply migrations, run the SQL files in your Supabase dashboard or use the Supabase CLI.
+
+#### Profiles Table
 
 Create a `profiles` table in your Supabase project:
 
@@ -192,6 +229,22 @@ CREATE TRIGGER on_auth_user_created
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
 ```
 
+#### Subscriptions Table
+
+Run the migration file `supabase/migrations/20250117000000_create_subscriptions_table.sql` in your Supabase dashboard, or use the Supabase CLI:
+
+```bash
+supabase db push
+```
+
+This creates the `subscriptions` table with:
+
+- Subscription status tracking
+- Stripe customer and subscription IDs
+- Trial period management
+- RLS policies for security
+- Automatic subscription creation for new users
+
 ### Authentication Setup
 
 1. Enable Email Authentication in your Supabase dashboard
@@ -202,32 +255,47 @@ CREATE TRIGGER on_auth_user_created
 
 ### Pre-Deployment Checklist
 
-Before deploying, complete your SEO configuration:
+Before deploying, complete these configurations:
 
-1. **Configure SEO settings** - See [Getting Started: SEO Configuration](reference/GETTING-STARTED-SEO.md)
-2. **Update environment variables** - Add production URLs and verification codes
-3. **Create required assets** - Favicon, app icons, and OG images
+1. **Configure Stripe** (if using payments) - See [Getting Started: Stripe Integration](reference/stripe-getting-started.md)
+   - Switch to Stripe Live mode
+   - Get production API keys
+   - Create products and prices
+   - Set up webhook endpoint
+2. **Configure SEO settings** - See [Getting Started: SEO Configuration](reference/GETTING-STARTED-SEO.md)
+3. **Update environment variables** - Add production URLs, API keys, and verification codes
+4. **Create required assets** - Favicon, app icons, and OG images
+5. **Run database migrations** - Apply Supabase migrations to production database
 
 ### Vercel
 
 1. Push your code to GitHub
 2. Import your repository in Vercel
-3. Add environment variables:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `NEXT_PUBLIC_SITE_URL` (your production domain)
-   - `NEXT_PUBLIC_GOOGLE_VERIFICATION` (optional, for Search Console)
+3. Add environment variables (see below)
 4. Deploy
 
 ### Environment Variables
 
 For production, ensure you set:
 
+**Required:**
+
 - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous key
+- `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key (for webhooks)
 - `NEXT_PUBLIC_SITE_URL`: Your production domain (e.g., https://yourdomain.com)
-- `NEXT_PUBLIC_GOOGLE_VERIFICATION`: Google Search Console verification code (optional)
-- `NEXT_PUBLIC_YANDEX_VERIFICATION`: Yandex verification code (optional)
+
+**Stripe (if using payments):**
+
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: Stripe publishable key (pk*live*...)
+- `STRIPE_SECRET_KEY`: Stripe secret key (sk*live*...)
+- `STRIPE_WEBHOOK_SECRET`: Stripe webhook signing secret (whsec\_...)
+- `STRIPE_PRICE_IDS`: JSON object with your price IDs (e.g., `{"pro":"price_xxx"}`)
+
+**Optional:**
+
+- `NEXT_PUBLIC_GOOGLE_VERIFICATION`: Google Search Console verification code
+- `NEXT_PUBLIC_YANDEX_VERIFICATION`: Yandex verification code
 
 ## Customization
 

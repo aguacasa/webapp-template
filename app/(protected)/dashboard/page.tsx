@@ -9,6 +9,10 @@ import {
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { UserNav } from '@/components/auth/user-nav'
+import { SubscriptionStatus } from '@/components/billing/subscription-status'
+import { ManageSubscriptionButton } from '@/components/billing/manage-subscription-button'
+import { getUserSubscription } from '@/lib/subscription/queries'
+import { enhanceSubscription } from '@/lib/subscription/status'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -19,6 +23,10 @@ export default async function DashboardPage() {
   if (!user) {
     return null
   }
+
+  // Fetch user subscription
+  const subscription = await getUserSubscription(supabase, user.id)
+  const enhanced = subscription ? enhanceSubscription(subscription) : null
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -62,6 +70,8 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
+        <SubscriptionStatus subscription={subscription} />
+
         <Card>
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
@@ -74,9 +84,15 @@ export default async function DashboardPage() {
             <Button className="w-full" variant="outline">
               Account Settings
             </Button>
-            <Button className="w-full" variant="outline">
-              View Activity
-            </Button>
+            {enhanced?.isPaidPlan ? (
+              <ManageSubscriptionButton />
+            ) : (
+              <Link href="/#pricing">
+                <Button className="w-full" variant="default">
+                  Upgrade Plan
+                </Button>
+              </Link>
+            )}
           </CardContent>
         </Card>
 

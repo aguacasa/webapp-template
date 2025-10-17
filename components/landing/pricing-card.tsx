@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { SubscribeButton } from '@/components/billing/subscribe-button'
 import type { PricingPlan } from '@/lib/data/pricing'
 import { cn } from '@/lib/utils'
 
@@ -15,6 +16,8 @@ interface PricingCardProps {
 }
 
 export function PricingCard({ plan }: PricingCardProps) {
+  const hasPriceId = plan.stripePriceId && plan.stripePriceId !== 'price_pro'
+
   return (
     <Card className={cn(plan.popular && 'border-primary')}>
       <CardHeader>
@@ -43,11 +46,27 @@ export function PricingCard({ plan }: PricingCardProps) {
             </li>
           ))}
         </ul>
-        <Link href="/register" className="mt-6 block">
-          <Button className="w-full" variant={plan.buttonVariant || 'default'}>
-            {plan.buttonText}
-          </Button>
-        </Link>
+        <div className="mt-6">
+          {hasPriceId ? (
+            <SubscribeButton
+              planName={plan.name}
+              priceId={plan.stripePriceId!}
+              trialDays={plan.trialDays}
+              variant={plan.buttonVariant || 'default'}
+            >
+              {plan.buttonText}
+            </SubscribeButton>
+          ) : (
+            <Link href="/register" className="block">
+              <Button
+                className="w-full"
+                variant={plan.buttonVariant || 'default'}
+              >
+                {plan.buttonText}
+              </Button>
+            </Link>
+          )}
+        </div>
       </CardContent>
     </Card>
   )
