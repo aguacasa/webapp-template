@@ -85,6 +85,18 @@ Open [http://localhost:3000](http://localhost:3000) to see your application.
 - Prettier for code formatting
 - Pre-configured rules and settings
 
+### SEO Optimization
+
+- Comprehensive metadata system with Open Graph and Twitter Cards
+- Structured data (JSON-LD) for better search visibility
+- Dynamic XML sitemap generation
+- Robots.txt configuration
+- PWA manifest for mobile optimization
+- Performance optimizations (image optimization, compression, caching)
+- Security headers configured
+
+**📖 For detailed SEO configuration instructions, see [Getting Started: SEO Configuration](reference/GETTING-STARTED-SEO.md)**
+
 ## Project Structure
 
 ```
@@ -97,15 +109,26 @@ webapp-template/
 │   │   └── dashboard/
 │   ├── api/                # API routes
 │   ├── layout.tsx          # Root layout
-│   └── page.tsx            # Home page
+│   ├── page.tsx            # Home page
+│   ├── sitemap.ts          # Dynamic XML sitemap
+│   ├── robots.ts           # Robots.txt configuration
+│   └── manifest.ts         # PWA manifest
 ├── components/             # React components
 │   ├── ui/                 # shadcn/ui components
 │   ├── auth/               # Authentication components
-│   └── forms/              # Form components
+│   ├── forms/              # Form components
+│   └── landing/            # Landing page sections
 ├── lib/                    # Utility functions
 │   ├── supabase/          # Supabase client setup
+│   ├── seo/               # SEO utilities
+│   │   ├── metadata.ts   # Metadata generator
+│   │   └── schema.tsx    # Structured data helpers
 │   ├── validations/       # Zod schemas
 │   └── utils.ts           # Helper functions
+├── reference/              # Reference documentation
+│   └── GETTING-STARTED-SEO.md  # SEO configuration guide
+├── docs/                   # Additional documentation
+│   └── SEO-SETUP.md       # Comprehensive SEO guide
 ├── types/                  # TypeScript types
 └── middleware.ts          # Next.js middleware
 ```
@@ -177,6 +200,14 @@ CREATE TRIGGER on_auth_user_created
 
 ## Deployment
 
+### Pre-Deployment Checklist
+
+Before deploying, complete your SEO configuration:
+
+1. **Configure SEO settings** - See [Getting Started: SEO Configuration](reference/GETTING-STARTED-SEO.md)
+2. **Update environment variables** - Add production URLs and verification codes
+3. **Create required assets** - Favicon, app icons, and OG images
+
 ### Vercel
 
 1. Push your code to GitHub
@@ -184,6 +215,8 @@ CREATE TRIGGER on_auth_user_created
 3. Add environment variables:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `NEXT_PUBLIC_SITE_URL` (your production domain)
+   - `NEXT_PUBLIC_GOOGLE_VERIFICATION` (optional, for Search Console)
 4. Deploy
 
 ### Environment Variables
@@ -192,6 +225,9 @@ For production, ensure you set:
 
 - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous key
+- `NEXT_PUBLIC_SITE_URL`: Your production domain (e.g., https://yourdomain.com)
+- `NEXT_PUBLIC_GOOGLE_VERIFICATION`: Google Search Console verification code (optional)
+- `NEXT_PUBLIC_YANDEX_VERIFICATION`: Yandex verification code (optional)
 
 ## Customization
 

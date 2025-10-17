@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
@@ -10,6 +11,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { generateMetadata as generateSEOMetadata } from '@/lib/seo/metadata'
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: 'Create Account',
+  description:
+    'Create a new account to get started with our platform and access all features.',
+  noIndex: true, // Auth pages typically shouldn't be indexed
+})
 
 export default async function RegisterPage() {
   const supabase = await createClient()

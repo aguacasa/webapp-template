@@ -1,13 +1,40 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { generateMetadata as generateSEOMetadata } from '@/lib/seo/metadata'
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  StructuredData,
+} from '@/lib/seo/schema'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
 
-export const metadata: Metadata = {
-  title: 'Next.js Starter Template',
-  description:
-    'A modern web application built with Next.js, TypeScript, and Supabase',
+export const metadata: Metadata = generateSEOMetadata({
+  title: undefined, // Will use default site name
+  keywords: [
+    'Next.js',
+    'React',
+    'TypeScript',
+    'Supabase',
+    'SaaS',
+    'Web Application',
+    'Starter Template',
+  ],
+})
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+  ],
 }
 
 export default function RootLayout({
@@ -15,8 +42,27 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const organizationSchema = generateOrganizationSchema({
+    sameAs: [
+      // Add your social media profiles here
+      // 'https://twitter.com/yourhandle',
+      // 'https://linkedin.com/company/yourcompany',
+      // 'https://github.com/yourorg',
+    ],
+    contactPoint: {
+      email: 'support@yourdomain.com',
+      contactType: 'Customer Support',
+    },
+  })
+
+  const websiteSchema = generateWebSiteSchema()
+
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
+      <head>
+        <StructuredData data={organizationSchema} />
+        <StructuredData data={websiteSchema} />
+      </head>
       <body className={inter.className}>
         <div className="min-h-screen bg-background">{children}</div>
       </body>
