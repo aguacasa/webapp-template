@@ -9,18 +9,29 @@ import type {
   SubscriptionInput,
 } from '@/types/subscription'
 
-// Create Supabase admin client for webhook operations
-// Webhooks need service role to bypass RLS
-const supabaseAdmin = createClient(
-  env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || '',
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
+/**
+ * Get Supabase admin client for webhook operations
+ * Uses lazy initialization to avoid build-time errors
+ * Webhooks need service role to bypass RLS
+ */
+function getSupabaseAdmin() {
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!serviceRoleKey) {
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY is required for webhook operations')
   }
-)
+
+  return createClient(
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    serviceRoleKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  )
+}
 
 /**
  * Convert Stripe subscription status to our status type
@@ -101,7 +112,7 @@ async function updateSubscriptionFromStripe(
       : null,
   }
 
-  const { error } = await supabaseAdmin
+  const { error } = await getSupabaseAdmin()
     .from('subscriptions')
     .upsert(subscriptionData, {
       onConflict: 'user_id',
@@ -158,7 +169,7 @@ async function handleSubscriptionDeleted(
   subscription: Stripe.Subscription
 ): Promise<void> {
   // Get user from customer
-  const { data: existingSubscription } = await supabaseAdmin
+  const { data: existingSubscription } = await getSupabaseAdmin()
     .from('subscriptions')
     .select('user_id')
     .eq('stripe_customer_id', subscription.customer as string)
@@ -166,7 +177,7 @@ async function handleSubscriptionDeleted(
 
   if (existingSubscription) {
     // Reset to free plan
-    await supabaseAdmin
+    await getSupabaseAdmin()
       .from('subscriptions')
       .update({
         status: 'free',
