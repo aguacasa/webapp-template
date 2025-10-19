@@ -7,6 +7,7 @@ import {
   generateWebSiteSchema,
   StructuredData,
 } from '@/lib/seo/schema'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -58,13 +59,32 @@ export default function RootLayout({
   const websiteSchema = generateWebSiteSchema()
 
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         <StructuredData data={organizationSchema} />
         <StructuredData data={websiteSchema} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme') || 'system';
+                const root = document.documentElement;
+
+                if (theme === 'system') {
+                  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  root.classList.add(systemTheme);
+                } else {
+                  root.classList.add(theme);
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body className={inter.className}>
-        <div className="min-h-screen bg-background">{children}</div>
+        <ThemeProvider defaultTheme="system">
+          <div className="min-h-screen bg-background">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   )

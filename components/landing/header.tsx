@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { UserNav } from '@/components/auth/user-nav'
+import { ThemeToggle } from '@/components/theme-toggle'
 import type { User } from '@supabase/supabase-js'
 
 interface LandingHeaderProps {
@@ -43,18 +44,21 @@ export function LandingHeader({ user }: LandingHeaderProps) {
         >
           YourBrand
         </Link>
-        {user ? (
-          <UserNav user={user} />
-        ) : (
-          <div className="flex gap-2">
-            <Link href="/login">
-              <Button variant="outline">Sign In</Button>
-            </Link>
-            <Link href="/register">
-              <Button>Get Started</Button>
-            </Link>
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          {user ? (
+            <UserNav user={user} />
+          ) : (
+            <div className="flex gap-2">
+              <Link href="/login">
+                <Button variant="outline">Sign In</Button>
+              </Link>
+              <Link href="/register">
+                <Button>Get Started</Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   )
